@@ -1,32 +1,32 @@
 <template>
     <div id="app" class="header__container">
         <div class="header__content_container">
-            <img alt="" src="../assets/header-logo.png">
+            <img alt="" src="@/assets/header-logo.png">
         
             <div class="header__nav-container">
-                <img class="header__nav-bg-image" alt="" src="../assets/header-nav-card-graphics.svg">
+                <img class="header__nav-bg-image" alt="" src="@/assets/header-nav-card-graphics.svg">
                 <div id="nav" class="header__nav-link-container">
-                <router-link 
-                    class="
-                    header__nav-link 
-                    header__nav-link--home" 
-                    to="/"
-                    >Home
-                </router-link>
-                <router-link 
-                    class="
-                    header__nav-link 
-                    header__nav-link--grass" 
-                    to="/grass"
-                    >Grass Only
-                </router-link>
-                <router-link 
-                    class="
-                    header__nav-link 
-                    header__nav-link--contact" 
-                    to="/contact"
-                    >Contact
-                </router-link>
+                    <router-link 
+                        class="
+                        header__nav-link 
+                        header__nav-link--home" 
+                        to="/"
+                        >Home
+                    </router-link>
+                    <router-link 
+                        class="
+                        header__nav-link 
+                        header__nav-link--grass" 
+                        to="/grass"
+                        >Grass Only
+                    </router-link>
+                    <router-link 
+                        class="
+                        header__nav-link 
+                        header__nav-link--contact" 
+                        to="/contact"
+                        >Contact
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -74,7 +74,7 @@
     font-family: Rosario;
     font-style: normal;
     font-weight: bold;
-    font-size: 27px;
+    font-size: 24px;
     line-height: 33px;
     text-align: center;
     // text-decoration-line: underline;
