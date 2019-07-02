@@ -8,9 +8,27 @@
       <div class="header__nav-container">
         <img class="header__nav-bg-image" alt="" src="./assets/header-nav-card-graphics.svg">
         <div id="nav" class="header__nav-link-container">
-          <router-link class="header__nav-link" to="/">Home</router-link>
-          <router-link class="header__nav-link" to="/grass">Grass Only</router-link>
-          <router-link class="header__nav-link" to="/contact">Contact</router-link>
+          <router-link 
+            class="
+              header__nav-link 
+              header__nav-link--home" 
+            to="/"
+            >Home
+          </router-link>
+          <router-link 
+            class="
+              header__nav-link 
+              header__nav-link--grass" 
+            to="/grass"
+            >Grass Only
+          </router-link>
+          <router-link 
+            class="
+              header__nav-link 
+              header__nav-link--contact" 
+            to="/contact"
+            >Contact
+          </router-link>
         </div>
       </div>
     </div>
@@ -54,26 +72,33 @@
     font-size: 27px;
     line-height: 33px;
     text-align: center;
-    text-decoration-line: underline;
+    // text-decoration-line: underline;
     color: #F6D301;
 
     align-self center
     margin-bottom 1em
+    position relative
 
-// #app
-//   font-family 'Avenir', Helvetica, Arial, sans-serif
-//   -webkit-font-smoothing antialiased
-//   -moz-osx-font-smoothing grayscale
-//   text-align center
-//   color #2c3e50
+    // &:after
+    //   content ""
+    //   position absolute
+    //   display inline-block
+    //   height 3px
+    //   background #F6D301
+    //   justify-self center
+    //   bottom -8px
+    //   width 50%
+    //   left 25%
+  
+    &--home
+      left 20%
+    &--grass
+      right 2%
+      color: #9DEF9B;
+    &--contact
+      right 16%
 
-// #nav
-//   padding 30px
-//   a
-//     font-weight bold
-//     color #2c3e50
-//     &.router-link-exact-active
-      // color #42b983
+
 </style>
 
 <style lang="stylus">
@@ -85,6 +110,7 @@ body
 
 a
   color #fff
+  text-decoration none
   
 
 </style>
