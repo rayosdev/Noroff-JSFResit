@@ -1,7 +1,7 @@
 <template>
-  <div class="home">
+  <div class="home__container">
     <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    
   </div>
 </template>
 
@@ -12,7 +12,21 @@ import HelloWorld from '@/components/HelloWorld.vue'
 export default {
   name: 'home',
   components: {
-    HelloWorld
+    
   }
 }
 </script>
+
+<style lang="stylus">
+@import "../styles/variables.styl"
+
+.home
+
+  &__container
+    // background $test
+    margin 0 auto
+    max-width $desktop-width
+
+
+</style>
+
