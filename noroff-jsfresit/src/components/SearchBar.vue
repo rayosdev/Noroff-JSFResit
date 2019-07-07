@@ -20,6 +20,7 @@
           >
           <div 
             class="search-bar__option-item"
+            @click="onSelectedItem"
             v-for="(item, index) in searchOptionItems" :key="index"
             >
             {{item}}
@@ -82,7 +83,12 @@ export default {
             return array
         },
         onLostFocus(){
-            this.searchOptionItems = []
+            setTimeout(() => {
+                // this.searchOptionItems = []
+            }, 200);
+        },
+        onSelectedItem(e){
+            this.$emit('serachItemSelected', e.target.innerText)
         }
     },
     

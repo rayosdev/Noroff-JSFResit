@@ -5,6 +5,7 @@
     <SearchBar 
       class="home__search-bar" 
       :allCardNames="allCardNames"
+      @serachItemSelected="expandCard($event)"
       />
 
     <div 
@@ -43,7 +44,9 @@ export default {
     }
   },
   methods: {
-    
+    expandCard(e){
+      
+    }
   },
   created() {
     fetch('https://api.pokemontcg.io/v1/cards?setCode=base1')
@@ -55,9 +58,7 @@ export default {
       this.cards.forEach(card => {
         this.allCardNames.push(card.name)
       });
-    })
-
-    
+    })    
   }
 
 }
