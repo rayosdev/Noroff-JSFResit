@@ -43,6 +43,19 @@
   margin 10px
   margin-top 5em
 
+  transform scale(1)
+  opacity 1
+  animation fadein 1s
+
+  @keyframes fadein
+    0%{
+        transform scale(0.7)
+        opacity 0
+      }
+    100%{ 
+      transform scale(1)
+      opacity 1
+    }
 
   &__image
     width: 175px;
