@@ -2,77 +2,46 @@
   <div class="home__container">
     
     <div class="home__search-bar search-bar__container">
-      <input class="search-bar__input" type="text">
+      <input 
+        class="search-bar__input" type="text"
+        @input="onSearchInput"
+        @focus="onSearchInput"
+        @blur="onLostFocus"
+        >
       <div class="search-bar__btn-container">
         <button class="search-bar__btn"></button>
         <div class="search-bar__btn-text"> search </div>
         <img class="search-bar__btn-icon" src="@/assets/home/search-btn-icon.svg" alt="" >
         <a href="" class="search-bar__btn-click-area"></a>
       </div>
+
+      <div class="search-bar__option-position-container">
+        <div 
+          class="search-bar__option-container"
+          v-if="searchOptionItems.length > 0"
+          >
+          <div 
+            class="search-bar__option-item"
+            v-for="(item, index) in searchOptionItems" :key="index"
+            >
+            {{item}}
+          </div>
+        </div>
+      </div>
+
     </div>
+    
 
-    <div class="preview-cards__container">
+    <div 
+      class="preview-cards__container"
+    >
+      <PreviewCard 
+      v-for="(card, index) in cards"
+      v-bind:key="index"
+      :card="card"
+      />
 
-      <div class="preview-card">
-        <img class="preview-card__image" src="https://images.pokemontcg.io/base1/14_hires.png" alt="">
-        <div class="preview-card__nav-container">
-          <img class="preview-card__nav-graphic" src="@/assets/home/card/pokedex-button.svg" alt="">
-          <div class="preview-card__nav-btn-container">
-            <button class="preview-card__nav-btn">Expand</button>
-            <img class="preview-card__nav-btn-icon" src="@/assets/home/card/expand-card-btn-icon.svg" alt="">
-            <a href="" class="preview-card__nav-btn-click-area"></a>
-          </div>
-        </div>
-      </div>
 
-      <div class="preview-card">
-        <img class="preview-card__image" src="https://images.pokemontcg.io/base1/14_hires.png" alt="">
-        <div class="preview-card__nav-container">
-          <img class="preview-card__nav-graphic" src="@/assets/home/card/pokedex-button.svg" alt="">
-          <div class="preview-card__nav-btn-container">
-            <button class="preview-card__nav-btn">Expand</button>
-            <img class="preview-card__nav-btn-icon" src="@/assets/home/card/expand-card-btn-icon.svg" alt="">
-            <a href="" class="preview-card__nav-btn-click-area"></a>
-          </div>
-        </div>
-      </div>
-      
-      <div class="preview-card">
-        <img class="preview-card__image" src="https://images.pokemontcg.io/base1/14_hires.png" alt="">
-        <div class="preview-card__nav-container">
-          <img class="preview-card__nav-graphic" src="@/assets/home/card/pokedex-button.svg" alt="">
-          <div class="preview-card__nav-btn-container">
-            <button class="preview-card__nav-btn">Expand</button>
-            <img class="preview-card__nav-btn-icon" src="@/assets/home/card/expand-card-btn-icon.svg" alt="">
-            <a href="" class="preview-card__nav-btn-click-area"></a>
-          </div>
-        </div>
-      </div>
-
-      <div class="preview-card">
-        <img class="preview-card__image" src="https://images.pokemontcg.io/base1/14_hires.png" alt="">
-        <div class="preview-card__nav-container">
-          <img class="preview-card__nav-graphic" src="@/assets/home/card/pokedex-button.svg" alt="">
-          <div class="preview-card__nav-btn-container">
-            <button class="preview-card__nav-btn">Expand</button>
-            <img class="preview-card__nav-btn-icon" src="@/assets/home/card/expand-card-btn-icon.svg" alt="">
-            <a href="" class="preview-card__nav-btn-click-area"></a>
-          </div>
-        </div>
-      </div>
-      
-      <div class="preview-card">
-        <img class="preview-card__image" src="https://images.pokemontcg.io/base1/14_hires.png" alt="">
-        <div class="preview-card__nav-container">
-          <img class="preview-card__nav-graphic" src="@/assets/home/card/pokedex-button.svg" alt="">
-          <div class="preview-card__nav-btn-container">
-            <button class="preview-card__nav-btn">Expand</button>
-            <img class="preview-card__nav-btn-icon" src="@/assets/home/card/expand-card-btn-icon.svg" alt="">
-            <a href="" class="preview-card__nav-btn-click-area"></a>
-          </div>
-        </div>
-      </div>
-      
     </div>
 
   </div>
@@ -82,12 +51,77 @@
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
 
+import PreviewCard from '@/components/PreviewCard.vue'
+import { async } from 'q';
+
 export default {
   name: 'home',
   components: {
+    PreviewCard
+  },
+  data() {
+    return {
+      cards: [],
+      allCardNames: [],
+      searchOptionItems: [],
+    }
+  },
+  methods: {
+    onSearchInput(e){
+      this.searchOptionItems = []
+      if(e.target.value == ""){
+        return
+      }
+      let inputText = e.target.value
+      this.sortMostRelavant(this.allCardNames, inputText)
+         
+      for (const item of this.allCardNames) {
+        
+      
+        if(this.searchOptionItems.length <= 4){
+          if(item[0].toUpperCase() == inputText[0].toUpperCase()){
+            if(item.toUpperCase().includes(inputText.toUpperCase()) ){
+              this.searchOptionItems.push(item)
+            }
+          }
+        }
+        else{break}
+        
+      }
+    },
+    sortMostRelavant(array, string){
+      array.sort( (name1, name2) => {
+        let score1 = 0
+        let score2 = 0
+        for (let i = 0; i < string.length; i++) {
+          if(i > name1.length - 1 || i > name2.length - 1){break}
+          if(string[i].toUpperCase() == name1[i].toUpperCase()){score1 += 1}
+          if(string[i].toUpperCase() == name2[i].toUpperCase()){score2 += 1}
+        }
+        if(score2 >= score1){ return 1}
+        else {return -1}
+      })
+      return array
+    },
+    onLostFocus(){
+      this.searchOptionItems = []
+    }
+  },
+  created() {
+    fetch('https://api.pokemontcg.io/v1/cards?setCode=base1')
+    .then( res => {
+      return res.json()
+    }).then( json => {
+      this.cards = json.cards
+      
+      this.cards.forEach(card => {
+        this.allCardNames.push(card.name)
+      });
+    })
 
+    
   }
-  
+
 }
 </script>
 
@@ -109,6 +143,8 @@ export default {
     grid-template-columns 1fr 1fr
     grid-template-rows 1fr auto
     margin-right 46px
+    max-height 47px
+    // border solid #0f0 4px
 
   &__input
     background: #DDDDDD;
@@ -120,6 +156,7 @@ export default {
     z-index 1
     padding-left 20px
     border none
+    font-size 1.2em
 
   &__btn-container
     grid-column 2/3
@@ -167,81 +204,42 @@ export default {
     height 100%
     z-index 2
 
+  &__option-position-container
+    grid-column 2/3
+    grid-row 1/2
+    position relative
+    display grid
+
+  &__option-container
+    width 90%
+    min-height 40px
+    position absolute
+    justify-self center
+    top 57px
+    padding-bottom 18px
+
+    background: #ddd;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 0px 0px 20px 20px;
+  
+  &__option-item
+    padding 10px
+    color #696969
+    cursor pointer
+
+    &:hover
+      color #fff
+      background: #696969;
+
 
 .preview-cards__container
+  margin 0 5vw
   margin-top 24px
   display: flex
   flex-flow: row wrap
   align-content: space-between
-  justify-content: space-between
+  justify-content: space-around
 
-  .preview-card
-
-    background: #FFFFFF;
-    border: 2px solid #525252;
-    box-sizing: border-box;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 10px;
-
-    grid-template-columns 1fr
-    grid-template-rows 5fr 1fr
-    display grid
-    padding 16px
-    margin 10px
-    margin-top 5em
-
-    &__image
-      width: 175px;
-
-      border: 2px solid #525252;
-      border-radius: 3px;
-      justify-self center
-      grid-row 1/2
-      grid-column 1/2
-
-    &__nav-container
-      grid-row 2/3
-      grid-column 1/2
-
-      display grid
-      margin-top 10px
-
-    &__nav-btn-container
-      grid-row 1/2
-      grid-column 2/3
-      justify-self end
-      display grid
-
-    &__nav-btn
-      width: 128px;
-      height: 35px;
-
-      background: #525252;
-      border-radius: 17.5px;
-      color #fff
-      border none
-      grid-row 1/2
-      grid-column 1/2
-      align-self center
-
-    &__nav-btn-icon
-      grid-row 1/2
-      grid-column 1/2
-      justify-self end
-      align-self center
-      margin-right 15px
-
-    &__nav-btn-click-area
-      grid-row 1/2
-      grid-column 1/2
-      justify-self end
-      width 100%
-      position relative
-      z-index 1
-      display block
-
-
-            
 
 
 </style>

@@ -1,7 +1,9 @@
 <template>
 <div class="main-container">
   <Header />
-  <router-view/>
+  <router-view
+    class="view"
+  />
   <FooterElm class="footer-elm" />
 </div>
 </template>
@@ -15,7 +17,10 @@ import FooterElm from './components/FooterElm'
     components: {
       Header,
       FooterElm
-    }
+    },
+    created() {
+      
+    },
   }
 </script>
 
@@ -24,9 +29,13 @@ import FooterElm from './components/FooterElm'
 .main-container
   min-height 1000px
 
+.view
+  min-height 100vh
+
 .footer-elm
-  position absolute
-  bottom -100%
+  position relative
+  bottom 0
+  margin-top 40vh
 
 </style>
 
