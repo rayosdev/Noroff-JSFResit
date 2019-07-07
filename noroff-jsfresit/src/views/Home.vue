@@ -15,6 +15,7 @@
       v-for="(card, index) in cards"
       v-bind:key="index"
       :card="card"
+      @cardSelected="expandCard($event)"
       />
 
 
@@ -37,6 +38,7 @@ export default {
     PreviewCard,
     SearchBar,
   },
+  props: ["test"],
   data() {
     return {
       cards: [],
@@ -46,6 +48,8 @@ export default {
   methods: {
     expandCard(e){
       
+      const card = this.cards.filter(c => c.name == e)
+      this.$router.push({name: 'cardinfo', params:{card: card[0]}})
     }
   },
   created() {
@@ -59,12 +63,15 @@ export default {
         this.allCardNames.push(card.name)
       });
     })    
+    
+
   }
+
 
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 @import "../styles/variables.styl"
 
 .home
@@ -87,7 +94,7 @@ export default {
   flex-flow: row wrap
   align-content: space-between
   justify-content: space-around
-
+  margin-bottom 20vw
 
 
 </style>

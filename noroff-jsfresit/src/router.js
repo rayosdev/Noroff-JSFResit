@@ -11,7 +11,7 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
     },
     {
       path: '/grass',
@@ -25,6 +25,12 @@ export default new Router({
       path: '/contact',
       name: 'contact',
       component: () => import('./views/Contact.vue')
+    },
+    {
+      path: '/cardinfo',
+      name: 'cardinfo',
+      props: true,
+      component: () => import('./views/CardInfo.vue')
     },
   ]
 })

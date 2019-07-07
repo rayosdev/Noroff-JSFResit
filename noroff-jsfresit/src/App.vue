@@ -1,5 +1,6 @@
 <template>
 <div class="main-container">
+  <div id="tag-top"></div>
   <Header />
   <router-view
     class="view"
@@ -27,7 +28,7 @@ import FooterElm from './components/FooterElm'
 <style lang="stylus" scoped>
 
 .main-container
-  min-height 1000px
+  // min-height 1000px
 
 .view
   min-height 100vh
@@ -35,7 +36,6 @@ import FooterElm from './components/FooterElm'
 .footer-elm
   position relative
   bottom 0
-  margin-top 40vh
 
 </style>
 

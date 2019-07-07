@@ -84,10 +84,11 @@ export default {
         },
         onLostFocus(){
             setTimeout(() => {
-                // this.searchOptionItems = []
+                this.searchOptionItems = []
             }, 200);
         },
         onSelectedItem(e){
+            e.preventDefault();
             this.$emit('serachItemSelected', e.target.innerText)
         }
     },

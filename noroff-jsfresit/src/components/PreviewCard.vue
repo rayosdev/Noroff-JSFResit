@@ -6,7 +6,11 @@
           <div class="preview-card__nav-btn-container">
             <button class="preview-card__nav-btn">Expand</button>
             <img class="preview-card__nav-btn-icon" src="@/assets/home/card/expand-card-btn-icon.svg" alt="">
-            <a href="" class="preview-card__nav-btn-click-area"></a>
+            <a 
+              @click="selectCard"
+              href="" class="preview-card__nav-btn-click-area"
+              >
+            </a>
           </div>
         </div>
       </div>
@@ -22,6 +26,12 @@
             return {
                 name: ""
             }
+        },
+        methods: {
+          selectCard(e){
+            e.preventDefault();
+            this.$emit('cardSelected', this.card.name)
+          }
         },
     }
 </script>
