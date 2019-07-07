@@ -73,6 +73,8 @@
     background #525252
     max-height 155px
     margin-bottom 60px
+    position relative
+    z-index 1
   
   &__content_container
     max-width $desktop-width
