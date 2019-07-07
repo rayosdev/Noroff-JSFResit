@@ -14,22 +14,13 @@
     
     <div class="card-info__info-container info">
         <h1 class="info__name">{{card.name}}</h1>
-        <div class="info__read-more">Read More</div>
-
-        <div class="read-more__item-container">
-            <div 
-                class="read-more__item"
-                v-for="(value, key) in card" 
-                v-bind:key="key"
-                >
-                <div class="read-more__item-key">
-                    {{key}}
-                </div>
-                <div class="read-more__item-value">
-                    {{value}}
-                </div>
-            </div>
-        </div>
+        <div 
+            class="info__read-more"
+            @click="onReadMore"   
+        >Read More</div>
+        <ReadMore 
+            :cardinfo="cardinfo"
+        />
     </div>
 
 
@@ -43,9 +34,20 @@
 </template>
 
 <script>
+
+import ReadMore from '@/components/ReadMore.vue'
+
 export default {
   name: "CardInfo",
   props: ["card"],
+  components: {
+      ReadMore
+  },
+  data() {
+      return {
+          cardinfo: {}
+      }
+  },
 
   created() {
     if (this.card === undefined) {
@@ -57,6 +59,44 @@ export default {
   methods: {
       goBack(){
           this.$router.push('/')
+      },
+      onReadMore(){
+          this.cardinfo = {}
+
+          for (const key in this.card) {
+            //   console.log(this.card[key])
+                if(
+                    key == 'id' ||
+                    key == 'name' ||
+                    key == 'imageUrl' ||
+                    key == 'imageUrlHiRes' ||
+                    key == 'setCode' 
+                ){}
+                else if(
+                    key == 'types' ||
+                    key == 'retreatCost'
+                ){
+                    this.cardinfo[key] = this.card[key].join(' ')
+                }
+                else if(
+                    key == 'attacks' ||
+                    key == 'weaknesses'
+                ){
+                    
+                    const ValuesStr = ""
+                    for (const item in this.card[key]) {
+                        console.log(key, item, this.card[key][item])
+                        for (const subitem in this.card[key][item]) {
+                            // console.log(subitem)
+                        }
+                    }
+                    this.cardinfo[key] = this.card[key].join(' ')
+                }
+                else{
+                    this.cardinfo[key] = this.card[key]
+                }
+          }
+        //   console.log(this.cardinfo)
       }
   },
 };
@@ -70,7 +110,7 @@ export default {
     max-width $desktop-width
     display grid
     grid-template-columns 2fr 1fr
-    grid-template-rows 0.3fr 2fr
+    grid-template-rows 54px 2fr
 
     margin-bottom 10em
 
@@ -202,31 +242,6 @@ export default {
         color: #3294DB;
         cursor pointer
 
-.read-more
 
-    &__item-container
-        padding 20px
-        padding-left 0
-
-    &__item
-        display flex
-        justify-content space-between
-
-        font-weight: normal;
-        font-size: 1.2em;
-        line-height: 21px;
-        letter-spacing: 0.045em;
-
-        color: #2F2F2F;
-        text-transform: capitalize;
-
-        // margin-top 0.3em
-        padding 10px 10px
-
-    &__item:nth-child(odd)
-        background #F6D301
-
-    &__item-key
-       font-weight bold 
 
 </style>
